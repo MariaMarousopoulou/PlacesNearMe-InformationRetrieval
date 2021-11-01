@@ -22,7 +22,7 @@ txtData = pd.read_csv('dataset_ubicomp2013_tips.txt', sep='\t', encoding='ISO-88
 txtData.columns = ['storeId', 'userId', 'comment']
 
 # Missing values
-txtData.isnull().sum()  # No missing valuese
+txtData.isnull().sum()  # No missing values
 
 txtData = txtData.drop('userId', 1)  # drop user
 txtData['comment'] = txtData['comment'].str.lower()  # convert to lowercase
@@ -47,6 +47,7 @@ txtData['comment'] = txtData['comment'].apply(lambda x: ' '.join([word for word 
 
 # Save to csv
 txtData.to_csv('preProcessedData.csv', sep='\t', encoding='utf-8', index=False, header=True)
+
 # Read from csv
 # txtData = pd.read_csv('preProcessedData.csv', sep='\t', encoding='utf-8')
 
