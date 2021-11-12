@@ -6,7 +6,10 @@ Created on Mon Oct 18 20:55:44 2021
 """
 
 import requests
+from stemming.porter2 import stem
+from spellchecker import SpellChecker
 from geopy.geocoders import Nominatim
+
 
 clientId = 'JUTODQMHVDELCGSSCA2QMNW3L1X0G53AXPK5QTQDHIJCUTTO'
 clientSecret = 'CGBRVW5AEW4GQBW21UII25BYSTZLUHGFV3044GJZRDKEPTRW'
@@ -50,3 +53,19 @@ for item in allItems:
 
 # Convert to list of tuples
 itemsListTuples = [i for t in items for i in t]
+
+userQuery = input('Enter query: ')
+
+# To lowercase
+userQuery = userQuery.lower()  # A place tht serves  sushi
+
+# Remove extra whitespaces
+userQuery = [x.strip() for x in userQuery.split()]
+
+# Spelling corrections
+spell = SpellChecker()
+correctUserQuery = [' '.join([spell.correction(w) for w in userQuery])]
+
+# Stemmer
+correctUserQuery = [[stem(word) for word in query.split(" ")] for query in correctUserQuery]
+correctUserQuery = [word for elem in correctUserQuery for word in elem]  # Flat list
