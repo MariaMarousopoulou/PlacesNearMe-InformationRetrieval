@@ -7,6 +7,7 @@ Created on Mon Oct 18 20:55:44 2021
 
 import requests
 from stemming.porter2 import stem
+from nltk.corpus import stopwords
 from spellchecker import SpellChecker
 from geopy.geocoders import Nominatim
 
@@ -69,3 +70,9 @@ correctUserQuery = [' '.join([spell.correction(w) for w in userQuery])]
 # Stemmer
 correctUserQuery = [[stem(word) for word in query.split(" ")] for query in correctUserQuery]
 correctUserQuery = [word for elem in correctUserQuery for word in elem]  # Flat list
+
+# Remove stopwords
+nltkStopWords = stopwords.words()
+for word in correctUserQuery:
+    if word in nltkStopWords: 
+        correctUserQuery.remove(word)
