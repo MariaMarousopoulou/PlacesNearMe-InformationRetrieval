@@ -18,6 +18,7 @@ from geopy.geocoders import Nominatim
 
 # Header image
 img = Image.open("wallpaper.jpg")
+st.image(img, width=None)
 
 # Title
 st.title("Place Near Me")
