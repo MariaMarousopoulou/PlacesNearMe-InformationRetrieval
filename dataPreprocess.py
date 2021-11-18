@@ -23,6 +23,9 @@ sidewayEmoticons = [':-)', ':)', ';)', ':o)', ':]', ':3', ':c)', ':>', '=]', '8)
 txtData = pd.read_csv('dataset_ubicomp2013_tips.txt', sep='\t', encoding='ISO-8859-1', header=None)
 txtData.columns = ['storeId', 'comment']
 
+# Save to csv before preprocess
+txtData.to_csv('rawData.csv', sep='\t', encoding='utf-8', index=False, header=True)
+
 # Missing values
 txtData.isnull().sum()  # No missing values
 
@@ -53,13 +56,16 @@ txtData['comment'] = [' '.join([spell(i) for i in x.split()]) for x in txtData['
 nltkPorterStemmer = PorterStemmer()
 txtData['comment'].apply(lambda x: [nltkPorterStemmer.stem(y) for y in x])
 
-# NLTK Stopwords
+# NLTK Stopwords;
 nltkStopwords = stopwords.words('english')
 txtData['comment'] = txtData['comment'].apply(lambda x: ' '.join([word for word in x.split() if word not in
                                                                   nltkStopwords]))
 
 # Tokenization
 txtData['comment'] = txtData['comment'].apply(lambda x: word_tokenize(x))
+
+# Remove duplicates
+# txtData.drop_duplicates()
 
 # Save to csv
 txtData.to_csv('processedData.csv', sep='\t', encoding='utf-8', index=False, header=True)
