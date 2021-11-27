@@ -225,13 +225,14 @@ if preference=='Similarity':
 
 #
 #    csvdata = pd.read_csv('final_comments_test.csv')
+    csvdata1=pd.read_csv('processedData.csv', sep=';', encoding='utf-8')
 #    df_name = pd.read_csv('four_square_places.csv')
     vectorizer = TfidfVectorizer()
     
     processed_tfidf = []
-    for line in df['Comment']:
+    for line in csvdata1['Comment']:
             # Remove all the special characters
-        processed = re.sub(r'\W', ' ', line)
+        processed = re.sub(r'\W', ' ', str(line))
          
             # remove all single characters
         processed = re.sub(r'\s+[a-zA-Z]\s+', ' ', processed)
@@ -275,7 +276,7 @@ if preference=='Similarity':
         cos_distance = cosine_similarity(line, query_vec)
         similarities_values.append(cos_distance)
         
-    for line in df['Comment']:
+    for line in csvdata1['Comment']:
         similarities_comments.append(line)   
         
     df_similarities=pd.DataFrame(list(zip(similarities_values,similarities_comments)),
