@@ -7,7 +7,6 @@ Created on Sun Oct 31 10:38:28 2021
 
 import pandas as pd
 from autocorrect import spell
-from nltk import word_tokenize
 from nltk.corpus import stopwords
 from nltk.stem import PorterStemmer
 
@@ -60,15 +59,8 @@ txtData['comment'].apply(lambda x: [nltkPorterStemmer.stem(y) for y in x])
 nltkStopwords = stopwords.words('english')
 txtData['comment'] = txtData['comment'].apply(lambda x: ' '.join([word for word in x.split() if word not in
                                                                   nltkStopwords]))
-
-# Tokenization
-txtData['comment'] = txtData['comment'].apply(lambda x: word_tokenize(x))
-
-# Remove duplicates
-# txtData.drop_duplicates()
-
 # Save to csv
-txtData.to_csv('processedData.csv', sep='\t', encoding='utf-8', index=False, header=True)
+txtData.to_csv('processedData.csv', sep='\t', encoding='utf-8', index=False, header=False)
 
 # Read from csv to check
-newTxtData = pd.read_csv('processedData.csv', sep='\t', encoding='utf-8')
+# newTxtData = pd.read_csv('processedData.csv', sep='\t', encoding='utf-8')
